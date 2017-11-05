@@ -10,44 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//后台路由开始
+Route::get('/admins/login', 'Admin\LoginController@showLoginForm')->name('admins.login');
+Route::post('/admins/login', 'Admin\LoginController@login')->name('admins.auth');
+Route::group([ 'namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 'admins' ], function () {
+    Route::get('/logout', 'LoginController@logout')->name('admins.logout');
+    Route::get('/', 'IndexController@index')->name('admins.index');
+    Route::get('/home', 'IndexController@home')->name('admins.home');
+    Route::resource('/categories', 'CategoriesController', [
+        'only' => [ 'index', 'store', 'destroy', 'update' ],
+    ]);
+});
 
-Route::get('/', function () {
-    return view('home.index.index');
+//前台路由开始
+Route::group([ 'namespace' => 'Home' ], function () {
+    Route::get('/', 'IndexController@index')->name('home');
 });
-Route::get('/article',function () {
-    return view('home.article.info');
-});
-Route::get('/layer',function () {
+
+Route::get('/user', function () {
     return view('home.users.info');
-});
-Route::get('/search',function () {
-    return view('home.index.search');
-});
-Route::get('/link',function () {
-    return view('home.link.link');
-});
-Route::get('/board',function () {
-    return view('home.board.board');
-});
-Route::get('/login',function () {
-    return view('admin.auth.login');
-});
-Route::get('/register',function () {
-    return view('home.auth.register');
-});
-Route::get('/message',function () {
-    return view('home.users.message');
-});
-
-Route::group(['namespace'=>'Admin'],function () {
-    Route::get('admins','IndexController@index');
-    Route::get('admins/home','IndexController@home')->name('admins.home');
-    Route::get('admins/users','IndexController@users')->name('admins.users');
-    Route::get('admins/users/info','IndexController@userInfo')->name('admins.user.info');
-    Route::get('admins/category','IndexController@category')->name('admins.category');
-    Route::get('admins/article/create','IndexController@articleCreate')->name('admins.article.create');
-    Route::get('admins/articles','IndexController@articles')->name('admins.articles');
-    Route::get('admins/notification','IndexController@notification')->name('admins.notification');
-    Route::get('admins/board','IndexController@board')->name('admins.board');
-    Route::get('admins/board','IndexController@board')->name('admins.board');
-});
+})->middleware('auth');

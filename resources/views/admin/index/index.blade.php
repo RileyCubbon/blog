@@ -31,10 +31,10 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img alt="image" class="img-circle" src="img/profile_small.jpg"/></span>
+                        <span><img alt="image" class="img-circle" src="{{ $user->avatar }}" width="64" height="64"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
+                               <span class="block m-t-xs"><strong class="font-bold">{{ $user->name }}</strong></span>
                                 <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
                                 </span>
                         </a>
@@ -48,7 +48,7 @@
                             <li><a class="J_menuItem" href="mailbox.html">信箱</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html">安全退出</a>
+                            <li><a href="{{ route('admins.logout') }}">安全退出</a>
                             </li>
                         </ul>
                     </div>
@@ -56,11 +56,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="layouts.html"><i class="fa fa-home"></i> <span
-                                class="nav-label">主页</span></a>
-                </li>
-                <li>
-                    <a class="J_menuItem" href="{{ route('admins.users') }}"><i class="fa fa-users"></i> <span
+                    <a class="J_menuItem" href="#"><i class="fa fa-users"></i> <span
                                 class="nav-label">用户列表</span></a>
                 </li>
                 <li>
@@ -68,7 +64,7 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="{{ route('admins.category') }}">分类列表</a>
+                            <a class="J_menuItem" href="{{ route('categories.index') }}">分类列表</a>
                         </li>
                     </ul>
                 </li>
@@ -77,10 +73,10 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="{{ route('admins.articles') }}">文章列表</a>
+                            <a class="J_menuItem" href="#">文章列表</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="{{ route('article') }}">添加文章</a>
+                            <a class="J_menuItem" href="#">添加文章</a>
                         </li>
                     </ul>
                 </li>
@@ -88,9 +84,9 @@
                     <a href="mailbox.html"><i class="fa fa-bell"></i> <span class="nav-label">消息 </span><span
                                 class="label label-warning pull-right">16</span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="{{ route('admins.notification') }}">站内消息</a>
+                        <li><a class="J_menuItem" href="#">站内消息</a>
                         </li>
-                        <li><a class="J_menuItem" href="{{ route('admins.board') }}">留言</a>
+                        <li><a class="J_menuItem" href="#">留言</a>
                         </li>
                     </ul>
                 </li>
@@ -159,7 +155,7 @@
                         </ul>
                     </li>
                     <li class="dropdown hidden-xs">
-                        <a aria-expanded="false">
+                        <a aria-expanded="false" href="{{ route('home') }}" target="_blank">
                             <i class="fa fa-home"></i> 前台主页
                         </a>
                     </li>
@@ -171,7 +167,8 @@
             </button>
             <nav class="page-tabs J_menuTabs">
                 <div class="page-tabs-content">
-                    <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html">首页</a>
+
+                    <a href="javascript:;" class="active J_menuTab" data-id="index_v1.html"><i class="fa fa-home"></i> 首页</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -190,7 +187,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+            <a href="{{ route('admins.logout') }}" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{ route('admins.home') }}"
