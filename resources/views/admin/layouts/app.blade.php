@@ -14,6 +14,11 @@
 
     {{--title图片--}}
     {{--<link rel="shortcut icon" href="favicon.ico">--}}
+
+    {{--全局js--}}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
@@ -26,10 +31,6 @@
 <body class="gray-bg">
 
 @yield('body')
-
-{{--全局js--}}
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 @yield('footer')
 

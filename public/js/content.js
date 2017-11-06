@@ -12,7 +12,8 @@ function $childNode(name) {
     return window.frames[name]
 }
 
-toastr.options = {
+
+window.toastr.options = {
     "closeButton": true,
     "debug": false,
     "progressBar": false,
@@ -20,7 +21,7 @@ toastr.options = {
     "onclick": null,
     "showDuration": "200",
     "hideDuration": "200",
-    "timeOut": "7000",
+    "timeOut": "3000",
     "extendedTimeOut": "1000",
     "showEasing": "swing",
     "hideEasing": "linear",
@@ -55,7 +56,7 @@ function animationHover(element, animation) {
 }
 
 $(function () {
-    $('[data-toggle="created_at"],.stop-category,.start-category').tooltip()
+    $('[data-toggle="created_at"],.stop-category,.start-category,a').tooltip()
 });
 
 $('.category-modal button').click(function () {
@@ -80,83 +81,110 @@ $('.category-modal button').click(function () {
 });
 
 function createNewCategory(data) {
-    var category = '<tr><td>' + data.id + '</td><td> <span class="line">' + data.category + '</span></td><td>0</td><td class="text-navy">启用中</td><td>' + data.created_at + '</td><td>' + data.admin_name + '</td><td><a href="#" title="点击启用分类"><i class="fa fa-check text-navy"></i></a><a href="#" title="点击停用分类"><i class="fa fa-times text-danger"></i></a></td></tr>';
+    var category = '<tr><td>'+data.id+'</td><td><span class="line">'+data.category+'</span></td><td>0</td><td><a href="#" name="status" class="text-navy" data-placement="top" data-original-title="点击修改分类状态">启用</a></td><td>'+data.created_at+'</td><td>'+data.admin_name+'</td></tr>';
     $('#category-table').append(category);
 }
 
-
-$('.stop-category').bind('click',stopCategory);
-
-$('.start-category').bind('click', startCategory);
-
-function startCategory(e) {
-    var current = $(this);
-    e.preventDefault();
-    swal({
-        title: "您确定要启用这条分类吗",
-        text: "启用后所有该分类的文章都将显示",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#2bdd42",
-        confirmButtonText: "启用",
-        closeOnConfirm: true
-    }, function (isConfirm) {
-        if (isConfirm) {
-            $.ajax({
-                url: current.attr('href'),
-                type: 'post',
-                dataType: 'json',
-                data: {'_token': $('meta[name="csrf-token"]').attr('content'), '_method': 'PUT'},
-                success: function (response) {
-                    toastr.success(response.message);
-                    current.attr('data-original-title', '点击停用分类');
-                    current.attr('class', 'stop-category');
-                    current.unbind('click').bind('click',stopCategory);
-                    current.find('i').attr('class', 'fa fa-times text-danger');
-                    var brother = current.parent().prevAll('#category-status');
-                    brother.attr('class', 'text-navy');
-                    brother.text('已启用');
-                },
-                error: function (response) {
-                    console.log(response)
+function articleSubmit() {
+    $('form .form-group').find('.help-block').remove();
+    var element = {}, categories = [],method;
+    method = $(this).attr('id') === 'article_submit' ? 'POST' : 'PUT';
+    element.title = $('form #title');
+    $('form input[name="categories"]:checked').each(function (index, element) {
+        categories.push($(element).val());
+    });
+    element.description = $('form textarea[name="description"]');
+    element.content = $('form textarea[name="content"]');
+    var data = {
+        'title': element.title.val(),
+        'categories': categories,
+        'description': element.description.val(),
+        'content': element.content.val(),
+        '_token': $('meta[name="csrf-token"]').attr('content'),
+        '_method':method
+    };
+    $.ajax({
+        url: $('.articleForm').attr('action'),
+        type: 'post',
+        dataType: 'json',
+        data: data,
+        success: function (response) {
+            if (method === 'PUT') location.href = response.message;
+            var message = '文章添加成功<a class="text-navy" href="' + response.message + '">点击查看</a>';
+            toastr.success(message);
+            element.title.val('');
+            element.description.val('');
+            element.content.val('');
+            $('form input[name="categories"]:checked').attr('checked', false);
+        },
+        error: function (response) {
+            var result = response.responseJSON;
+            toastr.error(result.message);
+            console.log(response);
+            $.each(result.errors, function (index, value) {
+                var error = '<span class="help-block m-b-none text-danger"><i class="fa fa-info-circle"></i>' + value + '</span>';
+                if (index === 'categories') {
+                    $('form input[name="categories"]:checkbox').parent().parent().append(error);
                 }
+                $.each(element, function (subscript, team) {
+                    if (index === subscript) {
+                        team.parent().append(error);
+                    }
+                });
             });
         }
     });
 }
 
-function stopCategory(e) {
-    var current = $(this);
+$('#article_submit,#article_update').bind('click', articleSubmit);
+
+
+$('a[name="is_show"],a[name="recommend"],a[name="status"]').bind('click',function (e) {
+    var value,current,action,status,title,text,is_category;
+    current = $(this);
     e.preventDefault();
+    status = current.attr('class') === 'text-navy';
+    action = current.attr('name');
+    switch (action){
+        case 'is_show':value = status ? '隐藏' : '显示';break;
+        case 'recommend':value = status ? '不推荐' : '推荐';break;
+        case 'status':value = status ? '停用' : '启用';
+    }
+    is_category = action === 'status';
+    title = is_category ? '确定'+value+'该分类吗' : '修改文章状态';
+    text = is_category ? value+'该分类后所有该分类下的文章都将'+value : "您确定要将这条文章的状态修改为 '"+value+"' 吗？";
     swal({
-        title: "您确定要停用这条分类吗",
-        text: "停用后所有该分类的文章都将隐藏",
+        title: title,
+        text: text,
         type: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "停用",
+        confirmButtonColor: status ? "#DD6B55" : "#2bdd42",
+        confirmButtonText: value,
         closeOnConfirm: true
-    }, function (isConfirm) {
+    },function (isConfirm) {
         if (isConfirm) {
             $.ajax({
-                url: current.attr('href'),
-                type: 'post',
-                dataType: 'json',
-                data: {'_token': $('meta[name="csrf-token"]').attr('content'), '_method': 'DELETE'},
-                success: function (response) {
-                    toastr.warning(response.message);
-                    current.attr('data-original-title', '点击启用分类');
-                    current.attr('class', 'start-category');
-                    current.unbind('click').bind('click',startCategory);
-                    current.find('i').attr('class', 'fa fa-check text-navy');
-                    var brother = current.parent().prevAll('#category-status');
-                    brother.attr('class', 'text-danger');
-                    brother.text('已停用');
+                url:current.attr('href'),
+                type:'post',
+                dataType:'json',
+                data:{'_token': $('meta[name="csrf-token"]').attr('content'), '_method': 'DELETE','action':action},
+                success:function (response) {
+                    var result = response.message;
+                    var className = result[action] ? 'text-navy' : 'text-danger';
+                    var message = '"'+result.title+'"'+' 状态已设置为'+value;
+                    if (result[action]) {
+                        toastr.success(message);
+                    } else {
+                        toastr.warning(message);
+                    }
+                    current.attr('class',className);
+                    current.html(value);
                 },
-                error: function (response) {
-                    console.log(response)
+                error:function (response) {
+                    console.log(response);
                 }
             });
         }
     });
-}
+});
+

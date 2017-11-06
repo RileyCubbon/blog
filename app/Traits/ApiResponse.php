@@ -21,19 +21,19 @@ trait ApiResponse
             'message' => $message,
             'data'    => $data,
         ];
-        if ( is_null($data) ) $response[ 'data' ];
+        if ( is_null($data) ) unset($response[ 'data' ]);
 
         return response()->json($response, $status);
     }
 
-    public function sendFailedResponse ( $error = null, $data = null, $status = null )
+    public function sendFailedResponse ( $message = null, $errors = null, $status = null )
     {
         $status   = is_null($status) ? $this->failed_code : $status;
         $response = [
-            'error' => $error,
-            'data'  => $data,
+            'message' => $message,
+            'errors'  => $errors,
         ];
-        if ( is_null($data) ) $response[ 'data' ];
+        if ( is_null($errors) ) unset($response[ 'errors' ]);
 
         return response()->json($response, $status);
     }

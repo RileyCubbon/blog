@@ -6,57 +6,77 @@ use App\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class CategoriesController
+ * @package App\Http\Controllers\Admin
+ */
 class CategoriesController extends Controller
 {
+    /**
+     * @var Category
+     */
     protected $category;
 
+    /**
+     * CategoriesController constructor.
+     *
+     * @param Category $category
+     */
     public function __construct ( Category $category )
     {
         $this->category = $category;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index ()
     {
-        $categories = $this->category->all();
+        $categories = $this->category->withCount('articles')
+            ->get([ 'categories.id', 'category', 'status', 'created_at', 'admin_name' ]);
+
         return view('admin.categories.categories', compact('categories'));
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store ( Request $request )
     {
         $this->validateStore($request);
-        $data     = array_merge(
+        $data = array_merge(
             $request->only('category'),
             [ 'admin_name' => \Auth::guard('admin')->user()->name ]
         );
+
         $category = $this->category->create($data);
 
         return $this->sendSuccessResponse('添加分类成功', $category);
     }
 
+    /**
+     * 切换分类状态，停用或者启用
+     *
+     * @param int $id
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy ( $id )
     {
-        $category = $this->category->find($id);
-        if ( !$category->status ) {
-            return $this->sendFailedResponse('分类'.$category->category.'当前状态为已停用');
-        }
+        $category = $this->category->find($id, [ 'id', 'category', 'status' ]);
 
-        $category->update([ 'status' => 0 ]);
+        $category->status = !$category->status;
+        $category->save();
+        $message = array_merge($category->only('status'), [ 'title' => $category->category ]);
 
-        return $this->sendSuccessResponse('分类'.$category->category. '已停用');
+        return $this->sendSuccessResponse($message);
     }
 
-    public function update ( $id )
-    {
-        $category = $this->category->find($id);
-        if ( $category->status ) {
-            return $this->sendFailedResponse('分类'.$category->category.'当前状态为已启用');
-        }
-
-        $category->update([ 'status' => 1 ]);
-
-        return $this->sendSuccessResponse('分类'.$category->category.'已启用');
-    }
-
+    /**
+     * @param Request $request
+     */
     protected function validateStore ( Request $request )
     {
         $this->validate($request,

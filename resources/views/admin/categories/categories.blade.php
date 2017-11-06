@@ -25,7 +25,6 @@
                             <th>状态</th>
                             <th>添加时间</th>
                             <th>添加人</th>
-                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,19 +34,14 @@
                             <td>
                                 <span class="line">{{ $category->category }}</span>
                             </td>
-                            <td>3</td>
-                            <td class="{{ $category->status ? 'text-navy' : 'text-danger' }}" id="category-status">
-                                {{ $category->status ? '已启用' : '已停用' }}
+                            <td>{{ $category->articles_count }}</td>
+                            <td>
+                                <a href="{{ route('categories.destroy',$category->id) }}" name="status" class="text-{{ $category->status ? 'navy' : 'danger' }}" data-placement="top" data-original-title="点击修改分类状态">
+                                    {{ $category->status ? '启用' : '停用' }}
+                                </a>
                             </td>
                             <td>{{ $category->created_at }}</td>
                             <td>{{ $category->admin_name }}</td>
-                            <td>
-                                @if($category->status)
-                                <a href="{{ route('categories.destroy',$category->id) }}" class="stop-category" data-placement="top" data-original-title="点击停用分类"><i class="fa fa-times text-danger"></i></a>
-                                @else
-                                <a href="{{ route('categories.update',$category->id) }}" class="start-category" data-placement="top" data-original-title="点击启用分类"><i class="fa fa-check text-navy"></i></a>
-                                @endif
-                            </td>
                         </tr>
                         @empty
                         <tr>

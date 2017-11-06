@@ -73,10 +73,10 @@
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="#">文章列表</a>
+                            <a class="J_menuItem" href="{{ route('articles.index') }}">文章列表</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="#">添加文章</a>
+                            <a class="J_menuItem" href="{{ route('articles.create') }}">添加文章</a>
                         </li>
                     </ul>
                 </li>

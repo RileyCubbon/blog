@@ -20,13 +20,13 @@ Route::group([ 'namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' =>
     Route::resource('/categories', 'CategoriesController', [
         'only' => [ 'index', 'store', 'destroy', 'update' ],
     ]);
+    Route::resource('/articles', 'ArticlesController', [ 'except' => [ 'show' ] ]);
+    Route::post('/articles/uploads', 'ArticlesController@uploads');
+    Route::post('/articles/search', 'ArticlesController@search')->name('articles.search');
 });
 
 //前台路由开始
 Route::group([ 'namespace' => 'Home' ], function () {
-    Route::get('/', 'IndexController@index')->name('home');
+    Route::get('/', 'IndexController@index')->name('index');
+    
 });
-
-Route::get('/user', function () {
-    return view('home.users.info');
-})->middleware('auth');
