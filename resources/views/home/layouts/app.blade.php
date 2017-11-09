@@ -9,6 +9,7 @@
 
     <title>Riley Blog</title>
     <meta name="keywords" content="riley,blog">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{--title图片--}}
     {{--<link rel="shortcut icon" href="favicon.ico">--}}
@@ -29,7 +30,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand" >
+                    <a href="{{ route('index') }}" class="navbar-brand" >
                         HOME
                     </a>
                     <button type="button" data-toggle="collapse" data-target="#app-navbar-collapse"
@@ -56,11 +57,28 @@
                         <li>
                             <a id="search" href="#"><i class="fa fa-search"></i></a>
                         </li>
-                        <li>
-                            <a id="login" href="#">LOGIN</a>
+                        @guest
+                        <li><a  href="{{ route('login') }}">LOGIN</a></li>
+                        @else
+                        <li class="dropdown">
+                            <a href="#" style="padding: 10px 20px;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                                <img src="{{ Auth::user()->avatar }}" class="img-circle" width="30" height="30" alt="{{ Auth::user()->name }}">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                        Logout
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
+                        @endguest
                         <li>
-                            <a id="register" href="#">REGISTER</a>
+                            <a id="register" href="{{ route('register') }}">REGISTER</a>
                         </li>
                     </ul>
                 </div>
@@ -94,6 +112,7 @@
 {{--全局js--}}
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('js/plugins/layer/layer.min.js') }}"></script>
 
 @yield('footer')
 

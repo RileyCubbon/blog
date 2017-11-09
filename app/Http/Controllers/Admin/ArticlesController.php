@@ -146,7 +146,7 @@ class ArticlesController extends Controller
     public function search ( Request $request )
     {
         $this->validate($request, [ 'search' => 'required|alpha_dash' ]);
-        \Session::flash('search', $search = $request->get('search'));
+        session()->flash('search', $search = $request->get('search'));
         $articles = $this->getQuery()->where('title', 'like', "%$search%")->paginate(15);
 
         return view('admin.articles.articles', compact('articles'));

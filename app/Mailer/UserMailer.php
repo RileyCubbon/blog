@@ -9,7 +9,15 @@
 namespace App\Mailer;
 
 
-class UserMailer
-{
+use App\Model\User;
 
+class UserMailer extends Mailer
+{
+    public function verify ( User $user )
+    {
+        $data    = [ 'url' => route('users.verify', $user->verify_string) ];
+        $subject = 'Riley\'s Blog 邮箱验证';
+
+        $this->sendTo($user, $subject, 'email.verify', $data);
+    }
 }

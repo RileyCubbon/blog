@@ -12,14 +12,15 @@ class RedirectIfAuthenticated
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string $reddirect
+     * @param  null|string $reddirect
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $reddirect = 'home', $guard = null)
+    public function handle($request, Closure $next, $reddirect = null, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect(route($reddirect));
+            $reddirect = is_null($reddirect) ? \URL::previous() : route($reddirect);
+            return redirect($reddirect);
         }
 
         return $next($request);

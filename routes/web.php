@@ -28,5 +28,6 @@ Route::group([ 'namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' =>
 //前台路由开始
 Route::group([ 'namespace' => 'Home' ], function () {
     Route::get('/', 'IndexController@index')->name('index');
-    
+    Route::get('/verify/{message}','UsersController@verify')->name('users.verify');
 });
+Auth::routes();

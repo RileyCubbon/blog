@@ -1,5 +1,9 @@
 @extends('home.layouts.app')
 
+@section('head')
+    <link rel="stylesheet" href="{{ asset('css/plugins/sweetalert/sweetalert.css') }}">
+@endsection
+
 @section('content')
     <div class="ibox">
         <div class="ibox-content float-left">
@@ -129,5 +133,27 @@
 @endsection
 
 @section('footer')
-    <script src="{{ asset('js/plugins/layer/layer.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    @if(session()->has('email'))
+    <script>
+        window.setTimeout(function () {
+            swal({
+                title: '注册成功',
+                text: '验证信息已经发送到邮箱请先验证',
+                type: "success"
+            });
+        },1000);
+    </script>
+    @endif
+    @if(session()->has('verify'))
+        <script>
+            window.setTimeout(function () {
+                swal({
+                    title: '邮箱验证成功',
+                    text: '尊敬的 {{ Auth::user()->name }} 欢迎回来',
+                    type: "success"
+                });
+            },1000);
+        </script>
+    @endif
 @endsection

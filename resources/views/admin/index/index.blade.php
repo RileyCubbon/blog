@@ -52,7 +52,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="logo-element">H+
+                    <div class="logo-element">Riley
                     </div>
                 </li>
                 <li>
@@ -100,8 +100,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="layouts.html"><i class="fa fa-link"></i> <span
-                                class="nav-label">友情链接</span></a>
+                    <a class="J_menuItem" href="{{ route('login') }}"><i class="fa fa-link"></i> <span class="nav-label">友情链接</span></a>
                 </li>
             </ul>
         </div>
@@ -155,7 +154,7 @@
                         </ul>
                     </li>
                     <li class="dropdown hidden-xs">
-                        <a aria-expanded="false" href="{{ route('home') }}" target="_blank">
+                        <a aria-expanded="false" href="{{ route('index') }}" target="_blank">
                             <i class="fa fa-home"></i> 前台主页
                         </a>
                     </li>

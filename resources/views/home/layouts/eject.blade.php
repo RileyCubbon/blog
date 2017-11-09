@@ -9,6 +9,7 @@
 
     <title>Riley Blog</title>
     <meta name="keywords" content="riley,blog">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{--title图片--}}
     {{--<link rel="shortcut icon" href="favicon.ico">--}}

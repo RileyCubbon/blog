@@ -170,6 +170,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         YuanChao\Editor\EndaEditorServiceProvider::class,
+        Germey\Geetest\GeetestServiceProvider::class,
+        Naux\Mail\SendCloudServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,7 +231,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'EndaEditor' => YuanChao\Editor\Facade\EndaEditorFacade::class
+        'EndaEditor' => YuanChao\Editor\Facade\EndaEditorFacade::class,
+        'Geetest' => Germey\Geetest\Geetest::class,
 
     ],
 

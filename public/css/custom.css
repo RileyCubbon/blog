@@ -34,26 +34,10 @@ a:hover{
 .top-navigation .navbar-header{
     width:auto;
 }
-.page-header>h3>strong{
-    margin-left: 15px;
-}
 .top-navigation .navbar-brand{
     background: none;
     color:#777;
 }
-.ibox-content .page-header{
-    height:100px;
-
-}
-.ibox-content .page-header>h3{
-    height:60px;
-    line-height: 60px;
-}
-.ibox-content .page-header>h3>small{
-    line-height: 60px;
-}
-
-
 ul.paginate{
     overflow: hidden;
     margin:0 auto;
@@ -173,14 +157,26 @@ div.riley>a{
 }
 .article-message button{
     letter-spacing:0.2em;
-    padding:11px 36px;
+    padding:9px 36px;
 }
 .article-message button:hover{
     color:#00E8D7;
 }
 
-.login-form button{
-    width:100%;
-    letter-spacing: 0.2em;
+.custom-form{
+    width:400px;
+    margin:0 auto;
 }
+.custom-form input{
+    padding:25px 12px;
+    border-radius: 5px;
+}
+.custom-form button{
+    padding:10px 12px;
+    border-radius: 5px;
+    letter-spacing: 0.15em;
+}
+
+.layui-layer-content{border-radius:8px;}
+.layui-layer{border-radius:3px !important;}
 

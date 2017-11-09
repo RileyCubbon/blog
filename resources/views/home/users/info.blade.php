@@ -16,7 +16,7 @@
                 <div class="col-lg-5 user-address">
                     <p>昵称：要吃鸡的男人</p>
                     <p>工作：PHP程序员</p>
-                    <p>地址：<i class="fa fa-map-marker"></i>北京·顺义</p>
+                    <p>Github：<i class="fa fa-map-marker"></i>北京·顺义</p>
                     <p>描述：会点前端技术，div+css啊，jQuery之类的，不是很精；热爱生活，热爱互联网，热爱新技术；有一个小的团队，在不断的寻求新的突破</p>
                 </div>
             </div>

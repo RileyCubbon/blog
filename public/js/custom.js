@@ -19,33 +19,6 @@ $('.paginate>li').hover(function () {
     $(this).css('opacity', '0.3');
 });
 
-// 显示登陆表单
-function showLoginForm() {
-    parent.layer.open({
-        type: 2,
-        title: false,
-        shadeClose: true,
-        shade: 0.8,
-        offset: ['200px', '710px'],
-        area: ['500px', '255px'],
-        shift: 0,
-        content: ['http://riley.dev/login', 'no']
-    });
-}
-
-// 显示注册表单
-function showRegisterForm() {
-    parent.layer.open({
-        type: 2,
-        title: false,
-        shadeClose: true,
-        shade: 0.8,
-        offset: ['200px', '710px'],
-        area: ['500px', '345px'],
-        shift: 0,
-        content: ['http://riley.dev/register', 'no']
-    });
-}
 
 //显示搜索表单
 function showSearchForm() {
@@ -61,12 +34,7 @@ function showSearchForm() {
 }
 
 //给导航栏绑定事件
-$('.nav #login').click(function () {
-    showLoginForm();
-});
-$('.nav #register').click(function () {
-    showRegisterForm();
-});
+
 $('.nav #search').click(function () {
     showSearchForm();
 });
@@ -104,3 +72,5 @@ $('.board-input>button').click(function () {
     $('.board-input>div').css('display','block');
     $(this).css('display','none');
 });
+
+
