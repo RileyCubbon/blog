@@ -44,7 +44,7 @@
                 <div id="app-navbar-collapse" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#">ABOUT</a>
+                            <a href="{{ route('message.index') }}">LEAVING MESSAGE</a>
                         </li>
                         <li>
                             <a href="{{ route('link.index') }}">LINK</a>

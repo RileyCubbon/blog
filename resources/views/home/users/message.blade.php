@@ -6,7 +6,7 @@
             <div class="contact-box">
                 <div class="col-sm-4">
                     <div class="text-center">
-                        <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ asset('img/a2.jpg') }}">
+                        <img alt="image" class="img-circle m-t-xs img-responsive" src="{{ $user->avatar }}">
                         <div class="m-t-xs font-bold">{{ $user->work ?: '未填写' }}</div>
                     </div>
                 </div>

@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'name'            => $data[ 'name' ],
             'email'           => $data[ 'email' ],
             'password'        => bcrypt($data[ 'password' ]),
-            'avatar'          => 'http://riley.dev/img/a1.jpg',
+            'avatar'          => '/img/a1.jpg',
             'verify_string'   => str_random(48),
             'last_login_time' => Carbon::now(),
         ]);

@@ -42,7 +42,10 @@ Route::group([ 'namespace' => 'Home' ], function () {
         Route::get('/edit/user', 'UsersController@edit')->name('users.edit');
         Route::post('/user', 'UsersController@update')->name('users.update');
     });
-    //其他路由
+    //留言板路由
+    Route::get('/message','MessagesController@index')->name('message.index');
+    Route::post('/message','MessagesController@store')->name('message.store');
+    //友情链接路由
     Route::get('/link', 'LinksController@index')->name('link.index');
 });
 Auth::routes();
