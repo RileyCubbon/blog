@@ -10,7 +10,7 @@ $(document).ready(function () {
 });
 
 $(function () {
-    $('[data-toggle="created_at"]').tooltip()
+    $('[data-placement="top"]').tooltip()
 });
 // 分页按钮效果
 $('.paginate>li').hover(function () {
@@ -40,7 +40,9 @@ $('.nav #search').click(function () {
 });
 
 //显示用户信息弹框
-$('#user_header').click(function () {
+$('.user_header').bind('click',function (e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
     parent.layer.open({
         type: 2,
         title: false,
@@ -50,7 +52,7 @@ $('#user_header').click(function () {
         offset: ['150px', '572px'],
         area: ['770px', '270px'],
         shift: 0,
-        content: ['http://riley.dev/message','no']
+        content: [url,'no']
     });
 });
 
@@ -71,6 +73,36 @@ $('#upload-header').click(function () {
 $('.board-input>button').click(function () {
     $('.board-input>div').css('display','block');
     $(this).css('display','none');
+});
+
+$('a[name="recommend"],a[name="collector"]').bind('click',function (e) {
+    e.preventDefault();
+    var current = $(this);
+    $.ajax({
+        url:'/check/user',
+        type:'get',
+        success:function (response) {
+            if (!response.message){
+                location.href='/login'
+            } else {
+                $.ajax({
+                    url:current.attr('href'),
+                    type:'post',
+                    dataType:'json',
+                    data:{
+                        '_token': $('meta[name="csrf-token"]').attr('content'),
+                        'active':current.attr('name'),
+                        '_method':'PUT'
+                    },
+                    success:function (response) {
+                        var num = parseInt(current.next().text());
+                        current.next().text(response.message ? num+1 : num-1)
+                    }
+                });
+            }
+
+        }
+    });
 });
 
 

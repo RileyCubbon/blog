@@ -27,4 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function recommends (  )
+    {
+        return $this->belongsToMany(Article::class,'users_articles_recommends');
+    }
+
+    public function collectors (  )
+    {
+        return $this->belongsToMany(Article::class,'users_articles_collectors');
+    }
 }

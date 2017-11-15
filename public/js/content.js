@@ -152,7 +152,7 @@ $('a[name="is_show"],a[name="recommend"],a[name="status"]').bind('click',functio
     }
     is_category = action === 'status';
     title = is_category ? '确定'+value+'该分类吗' : '修改文章状态';
-    text = is_category ? value+'该分类后所有该分类下的文章都将'+value : "您确定要将这条文章的状态修改为 '"+value+"' 吗？";
+    text = is_category ? value+'该分类后所有该分类下的文章都将'+value : "您确定要将这条数据的状态修改为 '"+value+"' 吗？";
     swal({
         title: title,
         text: text,

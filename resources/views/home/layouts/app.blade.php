@@ -47,7 +47,7 @@
                             <a href="#">ABOUT</a>
                         </li>
                         <li>
-                            <a href="#">LINK</a>
+                            <a href="{{ route('link.index') }}">LINK</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav">
@@ -61,13 +61,16 @@
                         <li><a  href="{{ route('login') }}">LOGIN</a></li>
                         @else
                         <li class="dropdown">
-                            <a href="#" style="padding: 10px 20px;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <img src="{{ Auth::user()->avatar }}" class="img-circle" width="30" height="30" alt="{{ Auth::user()->name }}">
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li>
+                                    <a class="J_menuItem" href="{{ route('users.info') }}">个人资料</a>
+                                </li>
                                 <li>
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                        Logout
+                                        安全退出
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

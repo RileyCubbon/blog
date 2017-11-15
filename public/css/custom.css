@@ -24,7 +24,6 @@ a:hover{
 .ibox .ibox-content{
     border-radius:15px;
     margin-bottom: 50px;
-    overflow: hidden;
 }
 .wrapper.wrapper-content{
     margin-left:50px;
@@ -60,11 +59,7 @@ ul.paginate li:first-child{
 div#layui-layer20{
     top:150px;
 }
-#upload-header{
-    margin-top:10px;
-}
 .user-address{
-    height:210px;
     margin-top:20px;
 }
 .vertical-timeline-icon{
@@ -155,7 +150,7 @@ div.riley>a{
 .article-footer ul li i {
     margin-right: 5px;
 }
-.article-message button{
+.article-message .article-show{
     letter-spacing:0.2em;
     padding:9px 36px;
 }
@@ -179,4 +174,8 @@ div.riley>a{
 
 .layui-layer-content{border-radius:8px;}
 .layui-layer{border-radius:3px !important;}
+
+.help-block{
+    padding-left:15px;
+}
 

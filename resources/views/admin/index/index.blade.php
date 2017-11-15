@@ -81,8 +81,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="mailbox.html"><i class="fa fa-bell"></i> <span class="nav-label">消息 </span><span
-                                class="label label-warning pull-right">16</span></a>
+                    <a href="#">
+                        <i class="fa fa-bell"></i> <span class="nav-label">消息 </span>
+                        <span class="label label-warning pull-right">16</span>
+                    </a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="#">站内消息</a>
                         </li>
@@ -100,7 +102,15 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="{{ route('login') }}"><i class="fa fa-link"></i> <span class="nav-label">友情链接</span></a>
+                    <a href="#">
+                        <i class="fa fa-link"></i><span class="nav-label">友情链接 </span><span class="fa arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="{{ route('links.index') }}">友链列表</a>
+                        </li>
+                        <li><a class="J_menuItem" href="{{ route('links.create') }}">添加友链</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

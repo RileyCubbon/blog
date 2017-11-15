@@ -71,7 +71,7 @@ class ArticlesController extends Controller
         //添加表间关系
         $article->categories()->attach($request->get('categories'));
 
-        return $this->sendSuccessResponse(route('articles.show', $article->id));
+        return $this->sendSuccessResponse(route('article.show', $article->id));
     }
 
     /**
@@ -160,6 +160,6 @@ class ArticlesController extends Controller
         return $this->article->with([
             'categories' => function ( $query ) {$query->where('status', 1)->select('categories.id', 'category');},
             'admin'      => function ( $query ) {$query->select('admins.id', 'name');}
-        ])->select('id', 'title', 'is_show', 'click_amount', 'recommend_number', 'recommend', 'created_at', 'admin_id');
+        ])->select('id', 'title', 'is_show', 'click_amount', 'recommend', 'created_at', 'admin_id');
     }
 }

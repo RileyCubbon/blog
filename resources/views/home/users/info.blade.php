@@ -1,23 +1,32 @@
 @extends('home.layouts.app')
 
-@section('head')
-    <link href="{{ asset('css/plugins/cropper/cropper.min.css') }}" rel="stylesheet">
-@endsection
-
 @section('content')
     <div class="ibox">
-        <div class="ibox-content" style="margin-bottom: 20px">
+        <div class="ibox-content"  style="margin-bottom: 20px">
             <div class="row">
                 <div class="col-lg-4 text-center">
-                    <img src="img/a1.jpg" class="img-circle"><br>
-                    <button id="upload-header" class="btn btn-rounded btn-white btn-sm">点击上传头像
-                    </button>
+                    <img src="{{ $user->avatar }}" class="img-circle" style="margin-bottom: 10px"><br>
+                    <a href="{{ route('users.edit') }}"  class="btn btn-rounded btn-white btn-sm">点击修改信息</a>
                 </div>
                 <div class="col-lg-5 user-address">
-                    <p>昵称：要吃鸡的男人</p>
-                    <p>工作：PHP程序员</p>
-                    <p>Github：<i class="fa fa-map-marker"></i>北京·顺义</p>
-                    <p>描述：会点前端技术，div+css啊，jQuery之类的，不是很精；热爱生活，热爱互联网，热爱新技术；有一个小的团队，在不断的寻求新的突破</p>
+                    <table class="table" style="height: 176px">
+                        <tr>
+                            <td width="60">昵称:</td>
+                            <td>{{ $user->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>职业:</td>
+                            <td>{{ $user->work ?: '未填写' }}</td>
+                        </tr>
+                        <tr>
+                            <td>Github:</td>
+                            <td>{{ $user->url ?: '未填写' }}</td>
+                        </tr>
+                        <tr>
+                            <td>个人简介:</td>
+                            <td>{{ $user->description ?: '未填写' }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -120,113 +129,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('extension')
-    <div class="header-box" style="display: none">
-        <div class="ibox">
-            <div class="ibox-content">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="image-crop">
-                            <img src="img/a3.jpg">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <h4>图片预览：</h4>
-                        <div class="img-preview img-preview-sm"></div>
-                        <h4>说明：</h4>
-                        <p>
-                            你可以选择新图片上传，然后下载裁剪后的图片
-                        </p>
-                        <div class="btn-group">
-                            <label title="上传图片" for="inputImage" class="btn btn-primary">
-                                <input type="file" accept="image/*" name="file" id="inputImage" class="hide"> 上传新图片
-                            </label>
-                            <label title="下载图片" id="download" class="btn btn-primary">下载</label>
-                        </div>
-                        <h4>其他说明：</h4>
-                        <p>
-                            你可以使用<code>$({image}).cropper(options)</code>来配置插件
-                        </p>
-                        <div class="btn-group">
-                            <button class="btn btn-white" id="zoomIn" type="button">放大</button>
-                            <button class="btn btn-white" id="zoomOut" type="button">缩小</button>
-                            <button class="btn btn-white" id="rotateLeft" type="button">左旋转</button>
-                            <button class="btn btn-white" id="rotateRight" type="button">右旋转</button>
-                            <button class="btn btn-warning" id="setDrag" type="button">裁剪</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@section('footer')
-    <script src="{{ asset('js/plugins/layer/layer.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/cropper/cropper.min.js') }}"></script>
-    <script>
-        //头像裁剪插件开始
-        var $image = $(".image-crop > img");
-        $($image).cropper({
-            aspectRatio: 1,
-            preview: ".img-preview",
-            done: function (data) {
-                // 输出结果
-            }
-        });
-
-        var $inputImage = $("#inputImage");
-        if (window.FileReader) {
-            $inputImage.change(function () {
-                var fileReader = new FileReader(),
-                    files = this.files,
-                    file;
-
-                if (!files.length) {
-                    return;
-                }
-
-                file = files[0];
-
-                if (/^image\/\w+$/.test(file.type)) {
-                    fileReader.readAsDataURL(file);
-                    fileReader.onload = function () {
-                        $inputImage.val("");
-                        $image.cropper("reset", true).cropper("replace", this.result);
-                    };
-                } else {
-                    showMessage("请选择图片文件");
-                }
-            });
-        } else {
-            $inputImage.addClass("hide");
-        }
-
-        $("#download").click(function () {
-            window.open($image.cropper("getDataURL"));
-        });
-
-        $("#zoomIn").click(function () {
-            $image.cropper("zoom", 0.1);
-        });
-
-        $("#zoomOut").click(function () {
-            $image.cropper("zoom", -0.1);
-        });
-
-        $("#rotateLeft").click(function () {
-            $image.cropper("rotate", 45);
-        });
-
-        $("#rotateRight").click(function () {
-            $image.cropper("rotate", -45);
-        });
-
-        $("#setDrag").click(function () {
-            $image.cropper("setDragMode", "crop");
-        });
-        //头像裁剪插件结束
-    </script>
 @endsection

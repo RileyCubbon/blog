@@ -21,6 +21,7 @@ Route::group([ 'namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' =>
         'only' => [ 'index', 'store', 'destroy', 'update' ],
     ]);
     Route::resource('/articles', 'ArticlesController', [ 'except' => [ 'show' ] ]);
+    Route::resource('/links', 'LinksController', [ 'except' => [ 'show' ] ]);
     Route::post('/articles/uploads', 'ArticlesController@uploads');
     Route::post('/articles/search', 'ArticlesController@search')->name('articles.search');
 });
@@ -28,6 +29,20 @@ Route::group([ 'namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' =>
 //前台路由开始
 Route::group([ 'namespace' => 'Home' ], function () {
     Route::get('/', 'IndexController@index')->name('index');
-    Route::get('/verify/{message}','UsersController@verify')->name('users.verify');
+    //用户相关路由
+    Route::get('/verify/{message}', 'UsersController@verify')->name('users.verify');
+    Route::get('/user/{id}', 'UsersController@show')->name('users.show');
+    Route::get('/check/user', 'UsersController@check');
+    //文章相关路由
+    Route::put('/article/{id}', 'ArticlesController@toggle')->name('article.toggle');
+    Route::get('/article/{id}', 'ArticlesController@show')->name('article.show');
+    Route::get('/category/{category}', 'ArticlesController@category')->name('category.select');
+    Route::group([ 'middleware' => 'auth' ], function () {
+        Route::get('/user', 'UsersController@info')->name('users.info');
+        Route::get('/edit/user', 'UsersController@edit')->name('users.edit');
+        Route::post('/user', 'UsersController@update')->name('users.update');
+    });
+    //其他路由
+    Route::get('/link', 'LinksController@index')->name('link.index');
 });
 Auth::routes();

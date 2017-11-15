@@ -13,9 +13,9 @@ class FirstAdminSeeder extends Seeder
     {
         DB::table('admins')->insert([
             'name' => 'riley',
-            'email'=> 'rileycubbon@outlook.com',
+            'email'=> 'riley@outlook.com',
             'password' => bcrypt('123456789'),
-            'avatar' => 'http://riley.dev/img/a8.jpg',
+            'avatar' => 'img/a8.jpg',
             'created_at' => \Carbon\Carbon::now(),
         ]);
     }

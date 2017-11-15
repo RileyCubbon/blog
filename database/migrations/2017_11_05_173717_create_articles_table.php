@@ -23,7 +23,6 @@ class CreateArticlesTable extends Migration
             $table->string('description')->commnet('文章描述');
             $table->text('content')->comment('文章内容');
             $table->unsignedSmallInteger('click_amount')->default(0)->commnet('文章点击量');
-            $table->unsignedSmallInteger('recommend_number')->default(0)->commnet('文章推荐数量');
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->char('password',60)->comment('用户密码');
             $table->string('avatar')->comment('用户头像');
             $table->string('url',60)->nullable()->comment('Github地址');
-            $table->string('work',10)->nullable()->comment('工作');
+            $table->string('work',15)->nullable()->comment('工作');
             $table->text('description')->nullable()->comment('描述');
             $table->tinyInteger('is_verify')->default(0)->comment('是否邮箱验证过');
             $table->char('verify_string',48)->nullable()->comment('验证字符串');

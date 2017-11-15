@@ -51,7 +51,7 @@
                             </td>
                             <td>{{ $article->admin->name }}</td>
                             <td>{{ $article->click_amount }}</td>
-                            <td>{{ $article->recommend_number }}</td>
+                            <td>0</td>
                             <td>0</td>
                             <td>
                                 <a href="{{ route('articles.destroy',$article->id) }}" name="recommend" class="text-{{ $article->recommend ? 'navy' : 'danger' }}" data-placement="top" data-original-title="点击修改文章推荐状态">
